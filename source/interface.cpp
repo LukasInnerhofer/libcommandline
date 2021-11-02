@@ -1,5 +1,7 @@
 #include <vector>
+#include <iostream>
 
+#include "libcommandline/args.h"
 #include "libcommandline/interface.h"
 #include "libutilities/non_null.h"
 
@@ -8,23 +10,39 @@ namespace LibCommandLine
 
 std::vector<NonNullSharedPtr<Option>> options;
 
-void addOption(NonNullSharedPtr<Option> option)
+void addOption(NonNullSharedPtr<Option> newOption)
 {
-    options.push_back(option);
+    for (auto option : options)
+    {
+        if (option->getIdentifier() == newOption->getIdentifier())
+        {
+            return;
+        }
+    }
+    options.push_back(newOption);
 }
 
-void parse(std::string_view string)
+void parse(int argc, char const *argv[])
 {
-    decltype(string)::size_type optionOffset;
-    while ((optionOffset = string.find(" -") + 2) < string.size())
+    auto args{Args{argc, argv}};
+
+    while (!args.done())
     {
+        if (args.peek()[0] != '-')
+        {
+            // TODO
+            args.next();
+            continue;
+        }
         for (auto option : options)
         {
-            if (string.at(optionOffset) == option->getIdentifier())
+            if (args.peek()[1] == option->getIdentifier())
             {
-                option->parse(string.substr(optionOffset));
+                option->parse(args);
+                break;
             }
         }
+        args.next();
     }
 }
 

@@ -10,7 +10,7 @@ Flag::Flag(char identifier) :
 
 }
 
-void Flag::parse(std::string_view string)
+void Flag::parse(Args &args)
 {
     m_set = true;
 }

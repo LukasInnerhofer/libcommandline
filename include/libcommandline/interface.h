@@ -6,7 +6,7 @@
 namespace LibCommandLine
 {
 
-void addOption(NonNullSharedPtr<Option> option);
-void parse(std::string_view arguments);
+void addOption(NonNullSharedPtr<Option> newOption);
+void parse(int argc, char const *argv[]);
 
 }

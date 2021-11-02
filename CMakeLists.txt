@@ -5,9 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 project(libcommandline)
 
 add_library(${PROJECT_NAME}
+    include/${PROJECT_NAME}/args.h
     include/${PROJECT_NAME}/flag.h
     include/${PROJECT_NAME}/option.h
     include/${PROJECT_NAME}/interface.h
+    source/args.cpp
     source/flag.cpp
     source/interface.cpp
     source/option.cpp)

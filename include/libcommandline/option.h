@@ -2,6 +2,8 @@
 
 #include <string_view>
 
+#include "libcommandline/args.h"
+
 namespace LibCommandLine
 {
 
@@ -12,7 +14,7 @@ public:
     virtual ~Option() = default;
 
     char getIdentifier() const;
-    virtual void parse(std::string_view string) = 0;
+    virtual void parse(Args &args) = 0;
 
 private:
     char m_identifier;
