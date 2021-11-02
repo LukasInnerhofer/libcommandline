@@ -9,7 +9,7 @@ class Option
 {
 public:
     Option(char identifier);
-    virtual ~Option() = 0;
+    virtual ~Option() = default;
 
     char getIdentifier() const;
     virtual void parse(std::string_view string) = 0;
