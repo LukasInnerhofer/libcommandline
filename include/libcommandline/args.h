@@ -10,9 +10,10 @@ class Args
 public:
     Args(int argc, char const *argv[]);
 
-    std::string_view peek() const;
+    std::string_view get(size_t offset = 0) const;
     void next();
-    bool done() const;
+    bool last() const;
+    bool end() const;
 
 private:
     int m_argc;

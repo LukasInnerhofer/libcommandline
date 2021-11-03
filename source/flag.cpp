@@ -12,6 +12,7 @@ Flag::Flag(char identifier) :
 
 void Flag::parse(Args &args, Badge<Parser>)
 {
+    args.next();
     m_set = true;
 }
 

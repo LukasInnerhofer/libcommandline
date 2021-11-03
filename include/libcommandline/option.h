@@ -20,7 +20,7 @@ public:
     char getIdentifier() const;
     virtual void parse(Args &args, Badge<Parser>) = 0;
 
-private:
+protected:
     char m_identifier;
 };
 

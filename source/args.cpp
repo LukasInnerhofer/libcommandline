@@ -10,9 +10,13 @@ Args::Args(int argc, char const *argv[]) :
 {
 }
 
-std::string_view Args::peek() const
+std::string_view Args::get(size_t offset) const
 {
-    return m_argv[m_iterator];
+    if (m_iterator + offset >= m_argc)
+    {
+        return {};
+    }
+    return m_argv[m_iterator + offset];
 }
 
 void Args::next()
@@ -20,7 +24,12 @@ void Args::next()
     ++m_iterator;
 }
 
-bool Args::done() const
+bool Args::last() const
+{
+    return m_iterator == m_argc - 1;
+}
+
+bool Args::end() const
 {
     return m_iterator >= m_argc;
 }
