@@ -1,7 +1,5 @@
 #include "libcommandline/multi_option.h"
 
-#include <iostream>
-
 namespace LibCommandLine
 {
 
