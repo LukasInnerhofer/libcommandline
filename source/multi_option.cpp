@@ -4,26 +4,14 @@ namespace LibCommandLine
 {
 
 MultiOption::MultiOption(char identifier) : 
-    Option{identifier},
+    OptionWithArgument{identifier},
     m_arguments{}
 {
 }
 
 void MultiOption::parse(Args &args, Badge<Parser>)
 {
-    auto string{args.get()};
-    if (string.size() == 2)
-    {
-        args.next();
-        string = args.get();
-    }
-    else 
-    {
-        string = string.substr(2);
-        string = string.substr(string.find_first_not_of(" \t"));    
-    }
-    m_arguments.push_back(string);
-    args.next();
+    m_arguments.push_back(parseArgument(args));
 }
 
 std::vector<std::string_view> const &MultiOption::getArguments() const

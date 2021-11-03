@@ -1,11 +1,11 @@
 #pragma once
 
-#include "libcommandline/option.h"
+#include "libcommandline/option_with_argument.h"
 
 namespace LibCommandLine
 {
 
-class MultiOption : public Option
+class MultiOption : public OptionWithArgument
 {
 public:
     MultiOption(char identifier);

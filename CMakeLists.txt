@@ -9,12 +9,16 @@ add_library(${PROJECT_NAME}
     include/${PROJECT_NAME}/multi_option.h
     include/${PROJECT_NAME}/flag.h
     include/${PROJECT_NAME}/option.h
+    include/${PROJECT_NAME}/option_with_argument.h
+    include/${PROJECT_NAME}/single_option.h
     include/${PROJECT_NAME}/parser.h
     source/args.cpp
     source/multi_option.cpp
     source/flag.cpp
-    source/parser.cpp
-    source/option.cpp)
+    source/option.cpp
+    source/option_with_argument.cpp
+    source/single_option.cpp
+    source/parser.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
