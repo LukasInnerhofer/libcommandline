@@ -11,7 +11,7 @@ class Flag : public Option
 public:
     Flag(char identifier);
 
-    void parse(Args &args) override;
+    void parse(Args &args, Badge<Parser>) override;
 
     operator bool() const;
 

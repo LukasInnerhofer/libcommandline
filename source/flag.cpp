@@ -10,7 +10,7 @@ Flag::Flag(char identifier) :
 
 }
 
-void Flag::parse(Args &args)
+void Flag::parse(Args &args, Badge<Parser>)
 {
     m_set = true;
 }

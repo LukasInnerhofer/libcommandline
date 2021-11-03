@@ -2,27 +2,27 @@
 #include <iostream>
 
 #include "libcommandline/args.h"
-#include "libcommandline/interface.h"
+#include "libcommandline/parser.h"
 #include "libutilities/non_null.h"
 
 namespace LibCommandLine
 {
 
-std::vector<NonNullSharedPtr<Option>> options;
+std::vector<NonNullSharedPtr<Option>> Parser::m_options;
 
-void addOption(NonNullSharedPtr<Option> newOption)
+void Parser::addOption(NonNullSharedPtr<Option> newOption)
 {
-    for (auto option : options)
+    for (auto option : m_options)
     {
         if (option->getIdentifier() == newOption->getIdentifier())
         {
             return;
         }
     }
-    options.push_back(newOption);
+    m_options.push_back(newOption);
 }
 
-void parse(int argc, char const *argv[])
+void Parser::parse(int argc, char const *argv[])
 {
     auto args{Args{argc, argv}};
 
@@ -34,11 +34,11 @@ void parse(int argc, char const *argv[])
             args.next();
             continue;
         }
-        for (auto option : options)
+        for (auto option : m_options)
         {
             if (args.peek()[1] == option->getIdentifier())
             {
-                option->parse(args);
+                option->parse(args, Badge<Parser>{});
                 break;
             }
         }

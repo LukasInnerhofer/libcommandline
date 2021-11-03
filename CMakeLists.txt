@@ -8,10 +8,10 @@ add_library(${PROJECT_NAME}
     include/${PROJECT_NAME}/args.h
     include/${PROJECT_NAME}/flag.h
     include/${PROJECT_NAME}/option.h
-    include/${PROJECT_NAME}/interface.h
+    include/${PROJECT_NAME}/parser.h
     source/args.cpp
     source/flag.cpp
-    source/interface.cpp
+    source/parser.cpp
     source/option.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
