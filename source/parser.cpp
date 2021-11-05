@@ -52,6 +52,10 @@ void Parser::parse(int argc, char const *argv[])
     }
 
     validateOperands();
+    for (auto option : m_options)
+    {
+        option->validate(Badge<Parser>{});
+    }
 }
 
 std::vector<std::string_view> const &Parser::getOperands()

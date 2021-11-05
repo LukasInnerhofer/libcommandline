@@ -12,6 +12,7 @@ public:
     Flag(char identifier);
 
     void parse(Args &args, Badge<Parser>) override;
+    void validate(Badge<Parser>) override {};
 
     operator bool() const;
 

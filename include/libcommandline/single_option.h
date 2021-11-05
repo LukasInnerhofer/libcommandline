@@ -8,12 +8,15 @@ namespace LibCommandLine
 class SingleOption : public OptionWithArgument
 {
 public:
-    SingleOption(char identifier);
+    SingleOption(char identifier, Necessity necessity = Necessity::Optional);
 
     void parse(Args &args, Badge<Parser>) override;
+    void validate(Badge<Parser>) override;
+
     std::string_view getArgument() const;
 
 private:
+    Necessity m_necessity;
     std::string_view m_argument;
 };
 
