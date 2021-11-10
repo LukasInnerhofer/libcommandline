@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "libcommandline/single_option.h"
 #include "libcommandline/option_with_argument.h"
 #include "libutilities/badge.h"
