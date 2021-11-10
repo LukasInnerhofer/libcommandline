@@ -3,7 +3,6 @@
 #include <string_view>
 
 #include "libcommandline/args.h"
-#include "libcommandline/parser.h"
 #include "libutilities/badge.h"
 
 namespace LibCommandLine
