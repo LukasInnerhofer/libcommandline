@@ -26,12 +26,26 @@ void MultiOption::validate(Badge<Parser>)
 
 void MultiOption::printHelp(std::ostream &stream)
 {
-    // TODO
+    stream << " ";
+    bool const required{m_necessity == Necessity::Required};
+    if (required)
+    {
+        print(stream);
+        stream << " ";
+    }
+    stream << "[";
+    print(stream);
+    stream << " ]...";
 }
 
 std::vector<std::string_view> const &MultiOption::getArguments() const
 {
     return m_arguments;
+}
+
+void MultiOption::print(std::ostream &stream) const
+{
+    stream << "-" << m_identifier << " value";
 }
 
 }

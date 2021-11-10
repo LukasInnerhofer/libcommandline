@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include "libcommandline/option_with_argument.h"
@@ -19,6 +20,8 @@ public:
     std::vector<std::string_view> const &getArguments() const;
 
 private:
+    void print(std::ostream &stream) const;
+
     Necessity m_necessity;
     std::vector<std::string_view> m_arguments;
 };

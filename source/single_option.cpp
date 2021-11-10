@@ -29,7 +29,7 @@ void SingleOption::validate(Badge<Parser>)
 
 void SingleOption::printHelp(std::ostream &stream)
 {
-    const bool optional{m_necessity == Necessity::Optional};
+    bool const optional{m_necessity == Necessity::Optional};
     stream << " ";
     if (optional)
     {
