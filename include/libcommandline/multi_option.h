@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "libcommandline/option_with_argument.h"
 
 namespace LibCommandLine
