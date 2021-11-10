@@ -21,6 +21,7 @@ public:
     char getIdentifier() const;
     virtual void parse(Args &args, Badge<Parser>) = 0;
     virtual void validate(Badge<Parser>) = 0;
+    virtual void printHelp(std::ostream &stream) = 0;
 
 protected:
     char m_identifier;

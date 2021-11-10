@@ -16,6 +16,11 @@ void Flag::parse(Args &args, Badge<Parser>)
     m_set = true;
 }
 
+void Flag::printHelp(std::ostream &stream)
+{
+    stream << " -" << m_identifier;
+}
+
 Flag::operator bool() const
 {
     return m_set;

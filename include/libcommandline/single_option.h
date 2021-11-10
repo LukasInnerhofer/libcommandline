@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "libcommandline/option_with_argument.h"
 
 namespace LibCommandLine
@@ -12,6 +14,7 @@ public:
 
     void parse(Args &args, Badge<Parser>) override;
     void validate(Badge<Parser>) override;
+    void printHelp(std::ostream &stream) override;
 
     std::string_view getArgument() const;
 

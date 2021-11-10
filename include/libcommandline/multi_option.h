@@ -14,6 +14,7 @@ public:
 
     void parse(Args &args, Badge<Parser>) override;
     void validate(Badge<Parser>) override;
+    void printHelp(std::ostream &stream) override;
 
     std::vector<std::string_view> const &getArguments() const;
 

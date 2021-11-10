@@ -78,10 +78,11 @@ void Parser::parse(int argc, char const *argv[])
 void Parser::printHelp(std::ostream &stream)
 {
     stream << m_executable;
-    /*for (auto option : m_options)
+    for (auto option : m_options)
     {
         option->printHelp(stream);
-    }*/
+    }
+    stream << "\n";
 }
 
 NonNullSharedPtr<std::vector<std::string_view>> Parser::getOperands()

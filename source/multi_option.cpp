@@ -24,6 +24,11 @@ void MultiOption::validate(Badge<Parser>)
     }
 }
 
+void MultiOption::printHelp(std::ostream &stream)
+{
+    // TODO
+}
+
 std::vector<std::string_view> const &MultiOption::getArguments() const
 {
     return m_arguments;

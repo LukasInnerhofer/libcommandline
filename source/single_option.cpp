@@ -27,6 +27,21 @@ void SingleOption::validate(Badge<Parser>)
     }
 }
 
+void SingleOption::printHelp(std::ostream &stream)
+{
+    const bool optional{m_necessity == Necessity::Optional};
+    stream << " ";
+    if (optional)
+    {
+        stream << "[";
+    }
+    stream << "-" << m_identifier << " value"; // Print something more useful than 'value'
+    if (optional)
+    {
+        stream << "]";
+    }
+}
+
 std::string_view SingleOption::getArgument() const
 {
     return m_argument;
