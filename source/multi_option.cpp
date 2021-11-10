@@ -1,5 +1,5 @@
+#include <stdexcept>
 #include "libcommandline/multi_option.h"
-#include <type_traits>
 
 namespace LibCommandLine
 {
