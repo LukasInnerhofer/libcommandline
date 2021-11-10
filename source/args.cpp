@@ -4,7 +4,7 @@ namespace LibCommandLine
 {
 
 Args::Args(int argc, char const *argv[]) :
-        m_iterator{1},
+        m_iterator{0},
         m_argc{argc}, 
         m_argv{argv}
 {

@@ -1,3 +1,5 @@
+#include <iostream>
+#include <filesystem>
 #include <stdexcept>
 #include <string>
 
@@ -8,9 +10,11 @@
 namespace LibCommandLine
 {
 
+std::string_view Parser::m_executable;
 std::vector<NonNullSharedPtr<Option>> Parser::m_options;
-std::vector<std::string_view> Parser::m_operands;
+NonNullSharedPtr<std::vector<std::string_view>> Parser::m_operands{makeNonNullShared<std::vector<std::string_view>>()};
 Parser::ExpectedOperands Parser::m_expectedOperands{Parser::ExpectedOperands::ManyOptional};
+NonNullSharedPtr<Flag> Parser::m_helpFlag{makeNonNullShared<Flag>('h')};
 
 void Parser::addOption(NonNullSharedPtr<Option> newOption)
 {
@@ -31,13 +35,20 @@ void Parser::expectOperands(ExpectedOperands expectedOperands)
 
 void Parser::parse(int argc, char const *argv[])
 {
-    auto args{Args{argc, argv}};
+    Args args{argc, argv};
+
+    addOption(m_helpFlag);
+
+    std::string_view arg{args.get()};
+    m_executable = arg.substr(arg.find_last_of("\\/") + 1);
+    args.next();
 
     while (!args.end())
     {
-        if (args.get()[0] != '-')
+        arg = args.get();
+        if (arg[0] != '-')
         {
-            m_operands.push_back(args.get());
+            m_operands->push_back(arg);
             args.next();
             continue;
         }
@@ -51,6 +62,12 @@ void Parser::parse(int argc, char const *argv[])
         }
     }
 
+    if (*m_helpFlag)
+    {
+        printHelp(std::cout);
+        return;
+    }
+
     validateOperands();
     for (auto option : m_options)
     {
@@ -58,14 +75,28 @@ void Parser::parse(int argc, char const *argv[])
     }
 }
 
-std::vector<std::string_view> const &Parser::getOperands()
+void Parser::printHelp(std::ostream &stream)
+{
+    stream << m_executable;
+    /*for (auto option : m_options)
+    {
+        option->printHelp(stream);
+    }*/
+}
+
+NonNullSharedPtr<std::vector<std::string_view>> Parser::getOperands()
 {
     return m_operands;
 }
 
+NonNullSharedPtr<Flag> Parser::getHelpFlag()
+{
+    return m_helpFlag;
+}
+
 void Parser::validateOperands()
 {
-    size_t const nOperands{m_operands.size()};
+    size_t const nOperands{m_operands->size()};
     std::string message;
     switch(m_expectedOperands)
     {

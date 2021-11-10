@@ -6,6 +6,8 @@
 namespace LibCommandLine
 {
 
+class Parser;
+
 class Flag : public Option
 {
 public:
