@@ -15,8 +15,8 @@ public:
     bool end() const;
 
 private:
-    int m_argc;
     int m_iterator;
+    int m_argc;
     char const **m_argv;
 };
 
