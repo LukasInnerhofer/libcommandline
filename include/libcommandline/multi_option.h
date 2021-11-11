@@ -11,7 +11,13 @@ namespace LibCommandLine
 class MultiOption : public OptionWithArgument
 {
 public:
-    MultiOption(char identifier, Necessity necessity = Necessity::Optional);
+    MultiOption(
+        char identifier,
+        std::string_view argumentName = "argument",
+        Necessity necessity = Necessity::Optional);
+    MultiOption(
+        char identifier, 
+        Necessity necessity = Necessity::Optional);
 
     void parse(Args &args, Badge<Parser>) override;
     void validate(Badge<Parser>) override;

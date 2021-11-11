@@ -77,7 +77,7 @@ void Parser::parse(int argc, char const *argv[])
 
 void Parser::printHelp(std::ostream &stream)
 {
-    stream << m_executable;
+    stream << "Usage:\n" << m_executable;
     for (auto option : m_options)
     {
         option->printHelp(stream);
@@ -104,13 +104,13 @@ void Parser::validateOperands()
     case ExpectedOperands::One:
         if (nOperands != 1)
         {
-            message = "Expected one operand ";
+            message = "Expected 1 operand ";
         }
         break;
     case ExpectedOperands::AtLeastOne:
         if (nOperands == 0)
         {
-            message = "Expected at least one operand ";
+            message = "Expected at least 1 operand ";
         }
         break;
     case ExpectedOperands::ManyOptional:
@@ -118,7 +118,7 @@ void Parser::validateOperands()
     case ExpectedOperands::OneOptional:
         if (nOperands > 1)
         {
-            message = "Expected one optional operand ";
+            message = "Expected 1 optional operand ";
         }
         break;
     case ExpectedOperands::None:

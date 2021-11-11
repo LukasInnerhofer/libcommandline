@@ -3,8 +3,11 @@
 namespace LibCommandLine
 {
 
-OptionWithArgument::OptionWithArgument(char identifier) :
-    Option{identifier}
+OptionWithArgument::OptionWithArgument(
+    char identifier,
+    std::string_view argumentName) :
+    Option{identifier},
+    m_argumentName{argumentName}
 {
 }
 

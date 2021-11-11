@@ -7,6 +7,16 @@
 namespace LibCommandLine
 {
 
+SingleOption::SingleOption(
+    char identifier, 
+    std::string_view argumentName, 
+    Necessity necessity) : 
+    OptionWithArgument{identifier, argumentName},
+    m_necessity{necessity},
+    m_argument{}
+{
+}
+
 SingleOption::SingleOption(char identifier, Necessity necessity) : 
     OptionWithArgument{identifier},
     m_necessity{necessity},
@@ -23,7 +33,7 @@ void SingleOption::validate(Badge<Parser>)
 {
     if (m_necessity == Necessity::Required && m_argument.empty())
     {
-        throw std::runtime_error{"LibCommandLine error. Missing required single option -" + std::string{m_identifier}};
+        throw std::runtime_error{"Missing required single option -" + std::string{m_identifier}};
     }
 }
 
@@ -35,7 +45,7 @@ void SingleOption::printHelp(std::ostream &stream)
     {
         stream << "[";
     }
-    stream << "-" << m_identifier << " value"; // Print something more useful than 'value'
+    stream << "-" << m_identifier << " <" << m_argumentName << ">";
     if (optional)
     {
         stream << "]";
