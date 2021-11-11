@@ -18,7 +18,7 @@ void Flag::parse(Args &args, Badge<Parser>)
 
 void Flag::printHelp(std::ostream &stream)
 {
-    stream << " -" << m_identifier;
+    stream << " [-" << m_identifier << "]";
 }
 
 Flag::operator bool() const
