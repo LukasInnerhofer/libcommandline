@@ -10,34 +10,23 @@
 namespace LibCommandLine
 {
 
-std::string_view Parser::m_executable;
-std::vector<NonNullSharedPtr<Option>> Parser::m_options;
-NonNullSharedPtr<std::vector<std::string_view>> Parser::m_operands{makeNonNullShared<std::vector<std::string_view>>()};
-Parser::ExpectedOperands Parser::m_expectedOperands{Parser::ExpectedOperands::ManyOptional};
-NonNullSharedPtr<Flag> Parser::m_helpFlag{makeNonNullShared<Flag>('h')};
-
-void Parser::addOption(NonNullSharedPtr<Option> newOption)
+Parser::Parser(
+    std::vector<NonNullSharedPtr<Option>> &&options,
+    ExpectedOperands expectedOperands,
+    std::string_view operandName) :
+    m_executable{},
+    m_options{std::move(options)},
+    m_operands{makeNonNullShared<std::vector<std::string_view>>()},
+    m_operandName{operandName},
+    m_expectedOperands{expectedOperands},
+    m_helpFlag{makeNonNullShared<Flag>('h')}
 {
-    for (auto option : m_options)
-    {
-        if (option->getIdentifier() == newOption->getIdentifier())
-        {
-            return;
-        }
-    }
-    m_options.push_back(newOption);
-}
-
-void Parser::expectOperands(ExpectedOperands expectedOperands)
-{
-    m_expectedOperands = expectedOperands;
+    m_options.push_back(m_helpFlag);
 }
 
 void Parser::parse(int argc, char const *argv[])
 {
     Args args{argc, argv};
-
-    addOption(m_helpFlag);
 
     std::string_view arg{args.get()};
     m_executable = arg.substr(arg.find_last_of("\\/") + 1);
@@ -82,6 +71,8 @@ void Parser::printHelp(std::ostream &stream)
     {
         option->printHelp(stream);
     }
+    stream << " ";
+    printOperands(stream);
     stream << "\n";
 }
 
@@ -132,6 +123,27 @@ void Parser::validateOperands()
     {
         message += "but received " + std::to_string(nOperands);
         throw std::runtime_error{message};
+    }
+}
+
+void Parser::printOperands(std::ostream &stream)
+{
+    switch (m_expectedOperands)
+    {
+    case ExpectedOperands::AtLeastOne:
+        stream << "<" << m_operandName << "> ...";
+        break;
+    case ExpectedOperands::ManyOptional:
+        stream << "[<" << m_operandName << "> ...]";
+        break;
+    case ExpectedOperands::One:
+        stream << "<" << m_operandName << ">";
+        break;
+    case ExpectedOperands::OneOptional:
+        stream << "[<" << m_operandName << ">]";
+        break;
+    default:
+        break;
     }
 }
 

@@ -4,6 +4,7 @@
 
 #include "libcommandline/option.h"
 #include "libcommandline/flag.h"
+#include "libutilities/concepts.h"
 #include "libutilities/non_null.h"
 
 namespace LibCommandLine
@@ -17,22 +18,27 @@ class Parser
 public:
     enum class ExpectedOperands { One, AtLeastOne, OneOptional, ManyOptional, None };
 
-    static void addOption(NonNullSharedPtr<Option> newOption);
-    static void expectOperands(ExpectedOperands expectedOperands);
-    static void parse(int argc, char const *argv[]);
-    static void printHelp(std::ostream &stream);
+    Parser(
+        std::vector<NonNullSharedPtr<Option>> &&options,
+        ExpectedOperands expectedOperands,
+        std::string_view operandName);
 
-    static NonNullSharedPtr<std::vector<std::string_view>> getOperands();
-    static NonNullSharedPtr<Flag> getHelpFlag();
+    void parse(int argc, char const *argv[]);
+    void printHelp(std::ostream &stream);
+
+    NonNullSharedPtr<std::vector<std::string_view>> getOperands();
+    NonNullSharedPtr<Flag> getHelpFlag();
 
 private:
-    static void validateOperands(); 
+    void validateOperands();
+    void printOperands(std::ostream &);
 
-    static std::string_view m_executable;
-    static std::vector<NonNullSharedPtr<Option>> m_options;
-    static NonNullSharedPtr<std::vector<std::string_view>> m_operands;
-    static ExpectedOperands m_expectedOperands;
-    static NonNullSharedPtr<Flag> m_helpFlag;
+    std::string_view m_executable;
+    std::vector<NonNullSharedPtr<Option>> m_options;
+    NonNullSharedPtr<std::vector<std::string_view>> m_operands;
+    std::string_view m_operandName;
+    ExpectedOperands m_expectedOperands;
+    NonNullSharedPtr<Flag> m_helpFlag;
 };
 
 }
