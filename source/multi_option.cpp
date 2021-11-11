@@ -8,7 +8,7 @@ namespace LibCommandLine
 MultiOption::MultiOption(char identifier, Necessity necessity) : 
     OptionWithArgument{identifier},
     m_necessity{necessity},
-    m_arguments{}
+    m_arguments{makeNonNullShared<std::vector<std::string_view>>()}
 {
 }
 
@@ -18,18 +18,18 @@ MultiOption::MultiOption(
     Necessity necessity) :
     OptionWithArgument{identifier, argumentName},
     m_necessity{necessity},
-    m_arguments{}
+    m_arguments{makeNonNullShared<std::vector<std::string_view>>()}
 {
 }
 
 void MultiOption::parse(Args &args, Badge<Parser>)
 {
-    m_arguments.push_back(parseArgument(args));
+    m_arguments->push_back(parseArgument(args));
 }
 
 void MultiOption::validate(Badge<Parser>)
 {
-    if (m_necessity == Necessity::Required && m_arguments.empty())
+    if (m_necessity == Necessity::Required && m_arguments->empty())
     {
         throw std::runtime_error{"Missing required multi-option -" + std::string{m_identifier}};
     }
@@ -48,7 +48,7 @@ void MultiOption::printHelp(std::ostream &stream)
     stream << "]...";
 }
 
-std::vector<std::string_view> const &MultiOption::getArguments() const
+NonNullSharedPtr<std::vector<std::string_view> const> MultiOption::getArguments() const
 {
     return m_arguments;
 }

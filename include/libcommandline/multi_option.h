@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "libcommandline/option_with_argument.h"
+#include "libutilities/non_null.h"
 
 namespace LibCommandLine
 {
@@ -23,13 +24,13 @@ public:
     void validate(Badge<Parser>) override;
     void printHelp(std::ostream &stream) override;
 
-    std::vector<std::string_view> const &getArguments() const;
+    NonNullSharedPtr<std::vector<std::string_view> const> getArguments() const;
 
 private:
     void print(std::ostream &stream) const;
 
     Necessity m_necessity;
-    std::vector<std::string_view> m_arguments;
+    NonNullSharedPtr<std::vector<std::string_view>> m_arguments;
 };
 
 }
